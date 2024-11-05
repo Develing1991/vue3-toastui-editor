@@ -17,15 +17,21 @@ const editorValid = ref();
 const testHtml = ref();
 
 //작성한 내용 불러와서 html 적용
-const testValid = (e) => {
-	testHtml.value = editorValid.value.getHTML()
+const testValid = async (e) => {
+  // debugger;
+	// testHtml.value = await editorValid.value.getHTML()
+  // editorValid.value.setHTML('<p>sdfsdds</p>')
+  editorValid.value.setMarkdown(`
+  >> 2312
+  >> 2312
+  `)
 };
 
 //마운트될때 Editor 생성
 onMounted(() => {
 		editorValid.value = new Editor({
 			el: editor.value,
-      previewStyle: 'vertical',
+      previewStyle: 'vertical', // tab
 			height: '500px',
       //'wysiwyg', 'markdown' 택 1
 			initialEditType: 'markdown',
@@ -33,6 +39,7 @@ onMounted(() => {
 				change: () => {
           emit('update:modelValue', editorValid.value.getMarkdown())
           console.log(editorValid.value.getMarkdown()); // value
+          
           
         }
 			},
@@ -45,6 +52,7 @@ onMounted(() => {
 <template>
     <div class="main">
 		  <div ref="editor" />		
+      <button @click="testValid">asdsa</button>
     </div>
 </template>
 
